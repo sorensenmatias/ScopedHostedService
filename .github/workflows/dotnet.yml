@@ -1,0 +1,38 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    branches: [ "main" ]
+    tags:
+      - "v*.*.*"   # publish when you push a version tag like v1.0.0
+  pull_request:
+    branches: [ "main" ]
+
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore ./src/ScopedHostedService.sln
+
+      - name: Test
+        run: dotnet test ./src/ScopedHostedService.sln
+
+      - name: Build
+        run: dotnet build ./src/ScopedHostedService.csproj --configuration Release --no-restore
+
+      - name: Pack
+        run: dotnet pack ./src/ScopedHostedService.csproj --configuration Release --no-build -o ./artifacts
+
+      - name: Push to NuGet
+        run: dotnet nuget push ./artifacts/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+
