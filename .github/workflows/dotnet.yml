@@ -28,10 +28,10 @@ jobs:
         run: dotnet test ./src/ScopedHostedService.sln
 
       - name: Build
-        run: dotnet build ./src/ScopedHostedService/ScopedHostedService.csproj --configuration Release --no-restore
+        run: dotnet build ./src/ScopedHostedService.csproj --configuration Release --no-restore
 
       - name: Pack
-        run: dotnet pack ./src/ScopedHostedService/ScopedHostedService.csproj --configuration Release --no-build -o ./artifacts
+        run: dotnet pack ./src/ScopedHostedService.csproj --configuration Release --no-build -o ./artifacts
 
       - name: Push to NuGet
         run: dotnet nuget push ./artifacts/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
