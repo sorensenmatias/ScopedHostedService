@@ -22,7 +22,10 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore
-        run: dotnet restore ./src/ScopedBackgroundService/ScopedBackgroundService.csproj
+        run: dotnet restore ./src/ScopedHostedService.sln
+
+      - name: Test
+        run: dotnet test ./src/ScopedHostedService.sln
 
       - name: Build
         run: dotnet build ./src/ScopedBackgroundService/ScopedBackgroundService.csproj --configuration Release --no-restore
