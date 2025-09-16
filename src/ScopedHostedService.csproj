@@ -27,4 +27,12 @@
     </None>
   </ItemGroup>
 
+  <PropertyGroup>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
 </Project>
