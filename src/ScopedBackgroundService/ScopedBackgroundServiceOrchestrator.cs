@@ -2,10 +2,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace ScopedHostedService.ScopedBackgroundService;
 
+/// <summary>
+///     Orchestrates how the scoped background runner is executed.
+/// </summary>
 public class ScopedBackgroundServiceOrchestrator<TScopedBackgroundRunner>(IServiceProvider serviceProvider)
     where TScopedBackgroundRunner : class, IScopedBackgroundRunner
 {
@@ -39,15 +41,5 @@ public class ScopedBackgroundServiceOrchestrator<TScopedBackgroundRunner>(IServi
                 scope.Dispose();
             }
         }
-    }
-}
-public class InternalScopedBackgroundService<TScopedBackgroundServiceOrchestrator, TScopedBackgroundRunner>(
-    TScopedBackgroundServiceOrchestrator scopedBackgroundServiceOrchestrator) : BackgroundService 
-    where TScopedBackgroundServiceOrchestrator : ScopedBackgroundServiceOrchestrator<TScopedBackgroundRunner>
-    where TScopedBackgroundRunner : class, IScopedBackgroundRunner
-{
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        return scopedBackgroundServiceOrchestrator.ExecuteAsync(stoppingToken);
     }
 }
