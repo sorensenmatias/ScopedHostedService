@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using ScopedHostedService.ScopedBackgroundService;
 
@@ -12,9 +11,23 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<TRunner>();
 
-        services.AddSingleton<ScopedBackgroundService<TRunner>>();
+        services.AddSingleton<ScopedBackgroundServiceOrchestrator<TRunner>>();
         
-        services.AddHostedService(sp => new ScopedBackgroundService<TRunner>.InternalBackgroundService(sp));
+        services.AddHostedService<InternalScopedBackgroundService<ScopedBackgroundServiceOrchestrator<TRunner>, TRunner>>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddBackgroundServiceScoped<TScopedBackgroundServiceOrchestrator, TRunner>(
+        this IServiceCollection services)
+        where TScopedBackgroundServiceOrchestrator : ScopedBackgroundServiceOrchestrator<TRunner>
+        where TRunner : class, IScopedBackgroundRunner
+    {
+        services.AddScoped<TRunner>();
+
+        services.AddSingleton<TScopedBackgroundServiceOrchestrator>();
+
+        services.AddHostedService<InternalScopedBackgroundService<TScopedBackgroundServiceOrchestrator, TRunner>>();
 
         return services;
     }
