@@ -25,7 +25,7 @@ dotnet add package ScopedHostedService
 Example usage
 ```c#
 // 1️⃣ Create a runner class
-public class HelloRunner : IScopedBackgroundRunner
+public class MyScopedBackgroundRunner : IScopedBackgroundRunner
 {
     private readonly ILogger<HelloRunner> _logger;
 
@@ -36,19 +36,12 @@ public class HelloRunner : IScopedBackgroundRunner
 
     public Task SayHelloAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Hello from ScopedHostedService!");
+        _logger.LogInformation("Hello from MyScopedBackgroundRunner! This code is executed in a scope.");
         return Task.CompletedTask;
-    }
-
-    // 2️⃣ Nested hosted service
-    public class Service : ScopedBackgroundService<HelloRunner>
-    {
-        public override Task ExecuteInScopeAsync(HelloRunner runner, CancellationToken stoppingToken)
-            => runner.SayHelloAsync(stoppingToken);
     }
 }
 
-// 3️⃣ Register and run
+// 2️⃣ Register and run
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
