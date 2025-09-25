@@ -1,6 +1,9 @@
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace ScopedHostedService.ScopedBackgroundService;
 
 public interface IScopedBackgroundRunner
 {
-    // marker only — no members needed
+    Task DoWorkAsync(CancellationToken cancellationToken);
 }
