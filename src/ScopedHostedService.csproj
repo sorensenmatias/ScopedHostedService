@@ -8,7 +8,7 @@
     <Authors>Matias Elisberg Sørensen</Authors>
     <Description>ScopedHostedService provides a clean way to implement background services with scoped dependencies in .NET.</Description>
     <PackageTags>backgroundservice;hostedservice;dependency-injection;scoped;dotnet</PackageTags>
-    <RepositoryUrl>https://github.com/yourusername/ScopedBackgroundService</RepositoryUrl>
+    <RepositoryUrl>https://github.com/sorensenmatias/ScopedHostedService</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 
