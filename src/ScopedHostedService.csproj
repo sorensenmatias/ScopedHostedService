@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>ScopedBackgroundService</PackageId>
+    <PackageId>ScopedHostedService</PackageId>
     <Version>0.1.0</Version>
     <Authors>Matias Elisberg Sørensen</Authors>
-    <Description>ScopedBackgroundService provides a clean way to implement background services with scoped dependencies in .NET.</Description>
+    <Description>ScopedHostedService provides a clean way to implement background services with scoped dependencies in .NET.</Description>
     <PackageTags>backgroundservice;hostedservice;dependency-injection;scoped;dotnet</PackageTags>
     <RepositoryUrl>https://github.com/yourusername/ScopedBackgroundService</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
