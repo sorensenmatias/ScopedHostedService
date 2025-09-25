@@ -2,12 +2,8 @@ name: Publish NuGet Package
 
 on:
   push:
-    branches: [ "main" ]
     tags:
       - "v*.*.*"   # publish when you push a version tag like v1.0.0
-  pull_request:
-    branches: [ "main" ]
-
 
 jobs:
   publish:
@@ -22,13 +18,13 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore
-        run: dotnet restore ./src/ScopedHostedService.sln
-
-      - name: Test
-        run: dotnet test ./src/ScopedHostedService.sln
+        run: dotnet restore ./src/ScopedHostedService.sln --configuration Release
 
       - name: Build
         run: dotnet build ./src/ScopedHostedService.csproj --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test ./src/ScopedHostedService.sln --configuration Release --no-restore
 
       - name: Pack
         run: dotnet pack ./src/ScopedHostedService.csproj --configuration Release --no-build -o ./artifacts
