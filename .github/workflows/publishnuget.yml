@@ -27,7 +27,7 @@ jobs:
         run: dotnet test ./src/ScopedHostedService.sln --configuration Release --no-restore
 
       - name: Pack
-        run: dotnet pack ./src/ScopedHostedService.csproj --configuration Release --no-build -o ./artifacts
+        run: dotnet pack ./src/ScopedHostedService.csproj --configuration Release --no-build -p:PackageVersion=${GITHUB_REF_NAME#v} -o ./artifacts
 
       - name: Push to NuGet
         run: dotnet nuget push ./artifacts/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
