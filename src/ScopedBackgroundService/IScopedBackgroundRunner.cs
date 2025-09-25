@@ -5,5 +5,5 @@ namespace ScopedHostedService.ScopedBackgroundService;
 
 public interface IScopedBackgroundRunner
 {
-    Task DoWorkAsync(CancellationToken cancellationToken);
+    Task ExecuteInScopeAsync(CancellationToken cancellationToken);
 }

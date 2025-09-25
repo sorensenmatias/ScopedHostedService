@@ -68,7 +68,7 @@ public class OrderProcessorTests
 
     private class TestRunner : IScopedBackgroundRunner
     {
-        public Task DoWorkAsync(CancellationToken cancellationToken)
+        public Task ExecuteInScopeAsync(CancellationToken cancellationToken)
         {
             TestRunnerExecuted = true;
             return Task.CompletedTask;

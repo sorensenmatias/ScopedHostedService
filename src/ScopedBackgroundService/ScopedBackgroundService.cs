@@ -9,20 +9,14 @@ namespace ScopedHostedService.ScopedBackgroundService;
 public class ScopedBackgroundService<TRunner>
     where TRunner : class, IScopedBackgroundRunner
 {
-    protected virtual Task ExecuteInScopeAsync(TRunner runner, CancellationToken stoppingToken)
+    public class InternalBackgroundService(IServiceProvider serviceProvider) : BackgroundService
     {
-        return runner.DoWorkAsync(stoppingToken);
-    }
-
-    internal sealed class InternalBackgroundService(IServiceProvider serviceProvider) : BackgroundService
-    {
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             var scopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
             await using var scope = scopeFactory.CreateAsyncScope();
-            var scopedBackgroundService = scope.ServiceProvider.GetRequiredService<ScopedBackgroundService<TRunner>>();
             var runner = scope.ServiceProvider.GetRequiredService<TRunner>();
-            await scopedBackgroundService.ExecuteInScopeAsync(runner, stoppingToken);
+            await runner.ExecuteInScopeAsync(cancellationToken);
         }
     }
 }
